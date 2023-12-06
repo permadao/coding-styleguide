@@ -151,6 +151,24 @@ alibaba java coding guidelines written very detailed, here to write some daily d
 - Constant names are all uppercase, words are separated by underscores, and the semantic expression is complete and clear, and the name is not too long
 - The name of an Abstract class starts with abstract or Base; Exception class names end with exception; A Test class name starts with the name of the class it is testing and ends with test
 - Package names are all lowercase, with one and only one natural English word between dot separators. Package names are singular, but class names can be plural if they have plural meanings
+- Avoid using exactly the same name between member variables of the child parent class, or between local variables of different code blocks, resulting in reduced readability
+- AbstractClass "abbreviation" is named AbsClass to avoid completely non-standard abbreviations. condition is "abbreviated" named cond
+- Enumeration class names must contain the Enum suffix. Enumeration member names must be in uppercase and separated by underscores (_)
+- When assigning long or Long, use uppercase L after the value, not lowercase l. Lowercase is easy to be confused with digits, causing misunderstanding
+- If the variable value only varies within a fixed range, defined by enum type
+- IDE text file encoding is set to UTF-8; Use Unix format for file newlines in the IDE, not Windows format
+- The total number of lines for a single method does not exceed 80
+
+
+### Exception handling
+- defined in the Java class library may avoid RuntimeException abnormalities by way of checking their shouldn't catch ways to deal with, such as: NullPointerException, IndexOutOfBoundsException and so on
+- Exceptions should not be used for flow control or condition control
+- Catch an exception in order to handle it, don't catch it and throw it away without handling anything, if you don't want to handle it, throw the exception to its caller. The outermost business consumer must handle the exception and translate it into something the user can understand
+- finally block must close resource objects, stream objects, and make a try-catch exception
+- Do not use return ina finally block
+- The catch exception must match the throw exception exactly, or the catch exception must be the parent of the throw exception
+- When calling RPC, a two-party package, or a method related to a dynamically generated class, catching exceptions must be intercepted using the Throwable class
+- NPE prevention is a basic discipline of programmers
 
 
 ### Security protocol
@@ -168,4 +186,7 @@ alibaba java coding guidelines written very detailed, here to write some daily d
 - Three required fields in the table are id, create_time, update_time
 - Do not use count(column name) or count(constant) instead of count(\*), count(*) is the syntax for the standard count of rows defined in SQL92, independent of the database, NULL and non-null
 - If all the values in a column are NULL, count(col) returns 0, but sum(col) returns NULL. Therefore, pay attention to NPE problems when using sum()
-  If the -in operation can be avoided, avoid it. If it cannot be avoided, carefully evaluate the number of set elements behind the in operation and control it within 1000
+- If the -in operation can be avoided, avoid it. If it cannot be avoided, carefully evaluate the number of set elements behind the in operation and control it within 1000
+- When the paging query logic is written in the code, if count is 0, it should be returned directly to avoid executing subsequent paging statements
+- Do not use stored procedures. Stored procedures are difficult to debug and extend, and are not portable
+- Do not use foreign keys and cascades, all foreign key concepts must be resolved at the application level
